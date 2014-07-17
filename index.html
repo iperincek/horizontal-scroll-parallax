@@ -1,0 +1,362 @@
+<!doctype html>
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scrolling Parallax</title>
+    
+ 
+    
+    <style>
+
+      .container {
+              width: 1202px;
+              margin: 0 auto;
+          }
+
+      * { margin: 0; padding: 0; }
+
+      img { display: block; }
+
+      header {
+        display: block;
+        height: 300px;
+      }
+
+      #scene-scroller {
+        width: 100%;
+        height: 680px;
+        overflow: hidden;
+        /* overflow-x: scroll;*/
+        position: relative;
+      }
+
+      #scene-scroller .scrollWrapper .scrollableArea {
+        width: 4500px !important;
+      }
+
+      #scene-slider {
+        position: relative;
+        height: 680px;
+        background: transparent url(img/scene_bg.jpg) repeat 0px 0%;
+        width: 4500px;
+      }
+
+      ul {
+        list-style: none;
+        display: block;
+      
+      }
+
+      /*SCENE-1*/
+
+      .scene_img-yoga {
+        top: 89px;
+        left: 726px;
+        z-index: 4;
+        position: absolute;
+ 
+        height: 600px;
+        width: 400px;
+      }
+
+      .scene_img-tree_c {
+        top: 0px;
+        left: 1552px;
+        z-index: 6;
+        position: absolute;
+      }
+
+      .scene_img-tree_f {
+        top: 154px;
+        left: 555px;
+        z-index: 3;
+        position: absolute;
+      }
+
+      .scene_img-tree_big {
+        left: 0px;
+        top: 0px;
+        z-index: 7;
+        width: 850px;
+        height: 850px;
+        position: absolute;
+      }
+
+      .scene_img-b_ball {
+        left: 2230px;
+        top: 39px;
+        z-index: 7;
+        position: absolute;
+      }
+
+      .scene_img-pole {
+        left: 3255px;
+        top: 92px;
+        z-index: 7;
+        cursor: pointer;
+        position: absolute;
+      }
+
+      .scene_img-jogger {
+        left: 3500px;
+        top: 45px;
+        z-index: 8;
+        cursor: pointer;
+        position: absolute;
+      }
+
+      #info_div {
+        left: 900px;
+        position: absolute;
+        top: 103px;
+        z-index: 11;
+        display: none;
+        cursor: pointer;
+       /* -webkit-box-shadow: 4px -3px 5px 0px rgba(50, 50, 50, 0.75);
+        -moz-box-shadow:    4px -3px 5px 0px rgba(50, 50, 50, 0.75);
+        box-shadow:         4px -3px 5px 0px rgba(50, 50, 50, 0.75);*/
+      }
+
+
+
+      .info_open {
+        -webkit-transition: all 1s ease-in-out;
+        -webkit-transform: translateX(-24%);
+        -moz-transition: all 1s ease-in-out;
+        -moz-transform: translateX(-24%);
+      }
+
+      #scene__content-bottom {
+        position: relative;
+      }
+
+      .btn_close {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      #btn_scroll-bt {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      #jogger_btn  {
+        z-index: 11;
+        position: absolute;
+        left: 42%;
+        top: 35%;
+      }
+
+      /* You can alter this CSS in order to give Smooth Div Scroll your own look'n'feel */
+
+      /* Invisible left hotspot */
+      div.scrollingHotSpotLeft
+      {
+        /* The hotspots have a minimum width of 100 pixels and if there is room the will grow
+          and occupy 15% of the scrollable area (30% combined). Adjust it to your own taste. */
+        min-width: 75px;
+        width: 4%;
+        height: 100%;
+        /* There is a big background image and it's used to solve some problems I experienced
+          in Internet Explorer 6. */
+        background-image: url(img/big_transparent.gif);
+        background-repeat: repeat;
+        background-position: center center;
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        /*  The first url is for Firefox and other browsers, the second is for Internet Explorer */
+        cursor: url(img/cursors/cursor_arrow_left.png), url(img/cursors/cursor_arrow_left.cur),w-resize;
+      }
+
+      /* Visible left hotspot */
+      div.scrollingHotSpotLeftVisible
+      {
+        background-image: url(img/arrow_left.gif);        
+        background-color: #fff;
+        background-repeat: no-repeat;
+        opacity: 0.35; /* Standard CSS3 opacity setting */
+        -moz-opacity: 0.35; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
+        filter: alpha(opacity = 35); /* Opacity for Internet Explorer. */
+        zoom: 1; /* Trigger "hasLayout" in Internet Explorer 6 or older versions */
+      }
+
+      /* Invisible right hotspot */
+      div.scrollingHotSpotRight
+      {
+        min-width: 75px;
+        width: 4%;
+        height: 100%;
+        background-image: url(img/big_transparent.gif);
+        background-repeat: repeat;
+        background-position: center center;
+        position: absolute;
+        z-index: 10;
+        right: 0;
+        cursor: url(img/cursors/cursor_arrow_right.png), url(img/cursors/cursor_arrow_right.cur),e-resize;
+      }
+
+      /* Visible right hotspot */
+      div.scrollingHotSpotRightVisible {
+        background-image: url(img/arrow_right.gif);
+        background-color: #fff;
+        background-repeat: no-repeat;
+        opacity: 0.35;
+        filter: alpha(opacity = 35);
+        -moz-opacity: 0.35;
+        zoom: 1;
+      }
+
+      /* The scroll wrapper is always the same width and height as the containing element (div).
+      */
+      div.scrollWrapper {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+      }
+
+      div.scrollableArea {
+        position: relative;
+        width: auto;
+        height: 100%;
+      }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            
+        </header>
+
+        <!-- SECTION: SCENE -->
+      <div id="info_div">
+        <img src="http://placehold.it/620x710" />
+      </div>
+
+        <section id="scene-scroller">
+              
+                <ul id="scene-slider">
+                   
+                  <li class="layer scene_img-yoga" id="yoga" data-stellar-ratio="1.3">
+                    <img src="http://placehold.it/350x150"  />
+                  </li>
+                  <li class="layer scene_img-tree_big" id="tree-b" data-stellar-ratio="1.4">
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                  <li class="layer scene_img-tree_c" data-stellar-ratio="1.2">
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                  <li class="layer scene_img-tree_f" data-stellar-ratio="1.1"> 
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                  <li class="layer scene_img-b_ball" id="basketball player" data-stellar-ratio="1.2"> 
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                  <li class="layer scene_img-pole" id="basketball player defenders" data-stellar-ratio="1.1"> 
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                  
+                  <li class="layer scene_img-jogger" id="jogger" data-depth="0.30" data-stellar-ratio="1.2"> 
+                    
+                    <img src="img/btn_open.png" id="jogger_btn">
+                    <img src="http://placehold.it/350x150" />
+                  </li>
+                
+                </ul>
+             
+          </section>
+
+      
+
+      
+         
+
+    </div>
+
+<script src='js/jquery-1.11.1.min.js'></script>
+<script src='js/jquery-ui-1.10.3.custom.min.js'></script>
+<script src='js/jquery.mousewheel.min.js'></script>
+<!-- jQuery Kinectic (1.8.2) used for touch scrolling -->
+<script src='js/jquery.kinetic.js' type="text/javascript"></script>
+<script src='js/jquery.smoothDivScroll-1.3.js'></script>
+<script src='js/jquery.stellar.js'></script>
+<script src='js/jquery.animate-enhanced.js'></script>
+
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+
+     var $scene = $('#scene-scroller');
+     var $sceneScroll = $('#scene-slider');
+     var $scenePosition = $scene.offset();
+     var $sceneLeft = $scene.scrollLeft()
+
+   // SCROLLING
+    $("#scene-scroller").smoothDivScroll({
+      //http://smoothdivscroll.com/options.html
+      autoScrollingMode: "onStart",
+      touchScrolling: true,
+      hotSpotScrolling: true, //DISPLAYS ARROWS ON HOVER
+      visibleHotSpotBackgrounds: "onStart",
+      autoScrollingDirection: "endlessLoopRight",
+      manualScrollingDirection: "right",
+      hotSpotsVisibleTime: 2500,
+      hotSpotMouseDownSpeedBooster: 4,
+    });
+
+
+    $('.scrollWrapper').stellar({
+      verticalOffset: 0,
+      verticalScrolling: true,
+      parallaxBackgrounds: false,
+      scrollProperty: 'scroll'
+    });
+
+
+    $('.scrollWrapper').scroll(function() {
+       // $("#makeMeScrollable").smoothDivScroll("option","autoScrollDirection","endlessLoopRight");
+
+    });
+
+
+    //JOGGER CONTENT
+    $('#jogger_btn').click(function() {
+      $('#info_div').slideToggle("fast");
+      $('#info_div').addClass('info_open');
+      $("#scene-scroller").smoothDivScroll("scrollToElement", "id", "jogger");
+    });
+
+    $('#info_div').click(function() {
+        $('#info_div').slideToggle("fast");
+    });
+
+    //SCROLL TO CONTENT BUTTON
+    $("#btn_scroll-bt").click(function() {
+      $('html, body').animate({
+          scrollTop: $("#scene-bottom").offset().top
+      }, 1000);
+  });
+
+}); 
+
+
+
+</script>
+
+
+</body>
+</html>
